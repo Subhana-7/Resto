@@ -27,6 +27,7 @@ export class RestaurantController implements IRestaurantController {
   updateRestaurant = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
+      console.log(req.body);
       const data = await this.resturantService.updateRestaurant(id, req.body);
       res.status(STATUS_CODES.OK).json(data);
     } catch (error) {

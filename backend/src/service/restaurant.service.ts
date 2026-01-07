@@ -29,6 +29,7 @@ export class RestaurantService implements IRestaurantService {
       restaurantId,
       data
     );
+    console.log(updated)
     if (!updated) {
       throw new Error(MESSAGES.ERROR.UPDATE_FAILED);
     }
