@@ -1,14 +1,15 @@
 import axios from "axios";
+import { RESTAURANT } from "../constants/routes";
 
-const API = "http://localhost:2000/api";
+const API = import.meta.env.VITE_SERVER_URL;
 
-export const getRestaurants = () => axios.get(`${API}/all`);
+export const getRestaurants = () => axios.get(`${API}${RESTAURANT.LIST}`);
 
 export const createRestaurant = (data: any) =>
-  axios.post(`${API}/create`, data);
+  axios.post(`${API}${RESTAURANT.CREATE}`, data);
 
 export const updateRestaurant = (id: string, data: any) =>
-  axios.put(`${API}/update/${id}`, data);
+  axios.put(`${API}${RESTAURANT.UPDATE}/${id}`, data);
 
 export const deleteRestaurant = (id: string) =>
-  axios.delete(`${API}/delete/${id}`);
+  axios.delete(`${API}${RESTAURANT.DELETE}/${id}`);
