@@ -1,12 +1,11 @@
 import { restaurantDto } from "../../dto/restaurant.dto";
 
-
 export interface IRestaurantService {
-   addRestaurant(data: restaurantDto): Promise<restaurantDto | null>;
-   updateRestaurant(
+  addRestaurant(data: restaurantDto): Promise<restaurantDto | null>;
+  updateRestaurant(
     restaurantId: string,
-    data: Partial<restaurantDto>
+    data: Partial<restaurantDto>,
   ): Promise<restaurantDto | null>;
-  deleteRestaurant(restaurantId: string): Promise<void | null> ;
-  listAllRestaurant(): Promise<restaurantDto[] | null>;
+  deleteRestaurant(restaurantId: string): Promise<void | null>;
+  listAllRestaurant(search?: string): Promise<restaurantDto[] | null>;
 }

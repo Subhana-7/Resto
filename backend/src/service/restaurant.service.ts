@@ -10,7 +10,7 @@ import { MESSAGES } from "../constants";
 export class RestaurantService implements IRestaurantService {
   constructor(
     @inject(TYPES.IRestaurantRepository)
-    private restaurantRepository: IRestaurantRepository
+    private restaurantRepository: IRestaurantRepository,
   ) {}
 
   async addRestaurant(data: restaurantDto): Promise<restaurantDto | null> {
@@ -23,11 +23,11 @@ export class RestaurantService implements IRestaurantService {
 
   async updateRestaurant(
     restaurantId: string,
-    data: Partial<restaurantDto>
+    data: Partial<restaurantDto>,
   ): Promise<restaurantDto | null> {
     let updated = await this.restaurantRepository.updateRestaurant(
       restaurantId,
-      data
+      data,
     );
     if (!updated) {
       throw new Error(MESSAGES.ERROR.UPDATE_FAILED);
@@ -42,8 +42,8 @@ export class RestaurantService implements IRestaurantService {
     }
   }
 
-  async listAllRestaurant(): Promise<restaurantDto[] | null> {
-    let res = await this.restaurantRepository.findAllRestaurants();
+  async listAllRestaurant(search?: string): Promise<restaurantDto[] | null> {
+    let res = await this.restaurantRepository.findAllRestaurants(search);
     if (!res) {
       throw new Error(MESSAGES.ERROR.LISTING_FAILED);
     }

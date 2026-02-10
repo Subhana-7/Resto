@@ -1,17 +1,16 @@
 import { Request, Response } from "express";
-import { injectable,inject } from "inversify";
+import { injectable, inject } from "inversify";
 import { IRestaurantController } from "./interfaces/IRestaurantController";
 import { IRestaurantService } from "../service/interfaces/IRestaurantService";
 import { TYPES } from "../types";
-import { STATUS_CODES,MESSAGES } from "../constants";
+import { STATUS_CODES, MESSAGES } from "../constants";
 
 @injectable()
 export class RestaurantController implements IRestaurantController {
   constructor(
-    @inject(TYPES.IRestaurantService) private resturantService:IRestaurantService
-  ) {
-    
-  }
+    @inject(TYPES.IRestaurantService)
+    private resturantService: IRestaurantService,
+  ) {}
 
   addRestaurant = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -52,7 +51,11 @@ export class RestaurantController implements IRestaurantController {
 
   listRestaurants = async (req: Request, res: Response): Promise<void> => {
     try {
-      const data = await this.resturantService.listAllRestaurant();
+      const { search } = req.query; 
+      const data = await this.resturantService.listAllRestaurant(
+        search?.toString(),
+      );
+
       res.status(STATUS_CODES.OK).json(data);
     } catch (error) {
       res.status(STATUS_CODES.BAD_REQUEST).json({

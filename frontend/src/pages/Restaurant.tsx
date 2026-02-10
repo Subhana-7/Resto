@@ -6,9 +6,10 @@ import RestaurantCard from "../components/RestaurantCard";
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   const load = async () => {
-    const res = await getRestaurants();
+    const res = await getRestaurants(search);
     setRestaurants(res.data);
   };
 
@@ -28,21 +29,29 @@ const Restaurants = () => {
         </button>
       </div>
 
+      <input
+        type="text"
+        placeholder="Search restaurants..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="border px-3 py-2 rounded w-64 mb-4"
+      />
+
+      <button
+        onClick={load}
+        className="ml-2 bg-gray-800 text-white px-4 py-2 rounded"
+      >
+        Search
+      </button>
+
       <div className="space-y-4">
         {restaurants.map((r: any) => (
-          <RestaurantCard
-            key={r._id}
-            restaurant={r}
-            refresh={load}
-          />
+          <RestaurantCard key={r._id} restaurant={r} refresh={load} />
         ))}
       </div>
 
       {open && (
-        <AddRestaurantModal
-          onClose={() => setOpen(false)}
-          onSuccess={load}
-        />
+        <AddRestaurantModal onClose={() => setOpen(false)} onSuccess={load} />
       )}
     </div>
   );

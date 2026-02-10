@@ -7,7 +7,7 @@ export class RestaurantRepository implements IRestaurantRepository {
   constructor() {}
 
   async createRestaurant(
-    data: Partial<IRestaurant>
+    data: Partial<IRestaurant>,
   ): Promise<IRestaurant | null> {
     try {
       return restaurantModel.create(data);
@@ -19,7 +19,7 @@ export class RestaurantRepository implements IRestaurantRepository {
 
   async updateRestaurant(
     restaurantId: string,
-    data: Partial<IRestaurant>
+    data: Partial<IRestaurant>,
   ): Promise<IRestaurant | null> {
     try {
       return restaurantModel.findByIdAndUpdate(restaurantId, data, {
@@ -40,9 +40,19 @@ export class RestaurantRepository implements IRestaurantRepository {
     }
   }
 
-  async findAllRestaurants(): Promise<IRestaurant[] | null> {
+  async findAllRestaurants(search?: string): Promise<IRestaurant[] | null> {
     try {
-      return restaurantModel.find();
+      const query: any = {};
+
+      if (search) {
+        query.$or = [
+          { name: { $regex: search, $options: "i" } },
+          { cuisine: { $regex: search, $options: "i" } },
+          { location: { $regex: search, $options: "i" } },
+        ];
+      }
+
+      return restaurantModel.find(query);
     } catch (error) {
       console.log("error", error);
       return null;

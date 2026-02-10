@@ -3,7 +3,10 @@ import { RESTAURANT } from "../constants/routes";
 
 const API = import.meta.env.VITE_SERVER_URL;
 
-export const getRestaurants = () => axios.get(`${API}${RESTAURANT.LIST}`);
+export const getRestaurants = (search?: string) =>
+  axios.get(`${API}${RESTAURANT.LIST}`, {
+    params: { search },
+  });
 
 export const createRestaurant = (data: any) =>
   axios.post(`${API}${RESTAURANT.CREATE}`, data);
