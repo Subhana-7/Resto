@@ -10,11 +10,11 @@ import { MESSAGES } from "../constants";
 export class RestaurantService implements IRestaurantService {
   constructor(
     @inject(TYPES.IRestaurantRepository)
-    private restaurantRepository: IRestaurantRepository,
+    private _restaurantRepository: IRestaurantRepository,
   ) {}
 
   async addRestaurant(data: restaurantDto): Promise<restaurantDto | null> {
-    let restaurant = await this.restaurantRepository.createRestaurant(data);
+    let restaurant = await this._restaurantRepository.createRestaurant(data);
     if (!restaurant) {
       throw new Error(MESSAGES.ERROR.CREATE_FAILED);
     }
@@ -25,7 +25,7 @@ export class RestaurantService implements IRestaurantService {
     restaurantId: string,
     data: Partial<restaurantDto>,
   ): Promise<restaurantDto | null> {
-    let updated = await this.restaurantRepository.updateRestaurant(
+    let updated = await this._restaurantRepository.updateRestaurant(
       restaurantId,
       data,
     );
@@ -36,14 +36,14 @@ export class RestaurantService implements IRestaurantService {
   }
 
   async deleteRestaurant(restaurantId: string): Promise<void | null> {
-    let res = await this.restaurantRepository.deleteRestaurant(restaurantId);
+    let res = await this._restaurantRepository.deleteRestaurant(restaurantId);
     if (!res) {
       throw new Error(MESSAGES.ERROR.DELETE_FAILED);
     }
   }
 
   async listAllRestaurant(search?: string): Promise<restaurantDto[] | null> {
-    let res = await this.restaurantRepository.findAllRestaurants(search);
+    let res = await this._restaurantRepository.findAllRestaurants(search);
     if (!res) {
       throw new Error(MESSAGES.ERROR.LISTING_FAILED);
     }

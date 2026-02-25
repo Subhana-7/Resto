@@ -9,12 +9,12 @@ import { STATUS_CODES, MESSAGES } from "../constants";
 export class RestaurantController implements IRestaurantController {
   constructor(
     @inject(TYPES.IRestaurantService)
-    private resturantService: IRestaurantService,
+    private _resturantService: IRestaurantService,
   ) {}
 
   addRestaurant = async (req: Request, res: Response): Promise<void> => {
     try {
-      const data = await this.resturantService.addRestaurant(req.body);
+      const data = await this._resturantService.addRestaurant(req.body);
       res.status(STATUS_CODES.CREATED).json(data);
     } catch (error) {
       res.status(STATUS_CODES.BAD_REQUEST).json({
@@ -25,8 +25,11 @@ export class RestaurantController implements IRestaurantController {
 
   updateRestaurant = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { id } = req.params;
-      const data = await this.resturantService.updateRestaurant(id, req.body);
+      const { restaurantId } = req.params;
+      const data = await this._resturantService.updateRestaurant(
+        restaurantId,
+        req.body,
+      );
       res.status(STATUS_CODES.OK).json(data);
     } catch (error) {
       res.status(STATUS_CODES.BAD_REQUEST).json({
@@ -37,8 +40,8 @@ export class RestaurantController implements IRestaurantController {
 
   deleteRestaurant = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { id } = req.params;
-      await this.resturantService.deleteRestaurant(id);
+      const { restaurantId } = req.params;
+      await this._resturantService.deleteRestaurant(restaurantId);
       res.status(STATUS_CODES.OK).json({
         message: MESSAGES.SUCCESS.DELETE_SUCCESS,
       });
@@ -51,8 +54,8 @@ export class RestaurantController implements IRestaurantController {
 
   listRestaurants = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { search } = req.query; 
-      const data = await this.resturantService.listAllRestaurant(
+      const { search } = req.query;
+      const data = await this._resturantService.listAllRestaurant(
         search?.toString(),
       );
 

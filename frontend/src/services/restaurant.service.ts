@@ -11,8 +11,8 @@ export const getRestaurants = (search?: string) =>
 export const createRestaurant = (data: any) =>
   axios.post(`${API}${RESTAURANT.CREATE}`, data);
 
-export const updateRestaurant = (id: string, data: any) =>
-  axios.put(`${API}${RESTAURANT.UPDATE}/${id}`, data);
+export const updateRestaurant = (restaurantId: string, data: any) =>
+  axios.put(`${API}${RESTAURANT.UPDATE}/${restaurantId}`, data);
 
-export const deleteRestaurant = (id: string) =>
-  axios.delete(`${API}${RESTAURANT.DELETE}/${id}`);
+export const deleteRestaurant = (restaurantId: string) =>
+  axios.delete(`${API}${RESTAURANT.DELETE}/${restaurantId}`);
