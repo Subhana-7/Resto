@@ -9,17 +9,18 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors()); 
-app.use(express.json());
-
+app.use(cors());
 app.use(express.json());
 
 app.use("/api", router);
 
 connectDB()
   .then(() => {
-    const PORT = process.env.PORT || 2000;
-    app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
+    const PORT = Number(process.env.PORT) || 2000;
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
   })
   .catch((error) => {
     console.error("Failed to connect to database:", error);
