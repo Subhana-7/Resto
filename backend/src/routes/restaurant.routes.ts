@@ -11,19 +11,19 @@ const controller = container.get<IRestaurantController>(
 );
 
 router.post(
-  "/create",
+  "/",
   validate(restaurantSchema),
   controller.addRestaurant.bind(controller),
 );
 router.put(
-  "/update/:restaurantId",
+  "/:restaurantId",
   validate(restaurantSchema.partial()),
   controller.updateRestaurant.bind(controller),
 );
 router.delete(
-  "/delete/:restaurantId",
+  "/:restaurantId",
   controller.deleteRestaurant.bind(controller),
 );
-router.get("/all", controller.listRestaurants.bind(controller));
+router.get("/", controller.listRestaurants.bind(controller));
 
 export default router;
